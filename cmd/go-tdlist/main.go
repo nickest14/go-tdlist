@@ -30,7 +30,12 @@ func run() error {
 	endDate := flag.String("end_date", "", "End date")
 
 	flag.Parse()
-
+	var welcomeMsg = `
+	___
+	|  _| | o  _ _|_
+	| (_| | | _>  |_
+	`
+	fmt.Println(welcomeMsg)
 	kv, _ := db.NewBuntDb("todos.db")
 	defer kv.Close()
 
