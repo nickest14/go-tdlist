@@ -2,7 +2,6 @@ package db
 
 import (
 	"log"
-	"time"
 
 	"github.com/tidwall/buntdb"
 )
@@ -63,10 +62,8 @@ func (k *KV) GetDescendRange(index, lessOrEqual, greaterThan string) ([]string, 
 }
 
 func (k *KV) Delete(key string) error {
-	// buntdb do not support delete command, so we use set with ttl
-	err := k.db.Update(func(tx *buntdb.Tx) error {
-		tx.Set(key, "", &buntdb.SetOptions{Expires: true, TTL: time.Second})
-		return nil
+	return k.db.Update(func(tx *buntdb.Tx) error {
+		_, err := tx.Delete(key)
+		return err
 	})
-	return err
 }
